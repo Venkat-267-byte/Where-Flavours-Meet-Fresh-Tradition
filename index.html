@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Where Flavours Meet Fresh Tradition</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Poppins', sans-serif;
+            background-color: #fdf6ec;
+        }
+
+        /* Navigation Bar */
+        nav {
+            background-color: #5a2d0c;
+            padding: 12px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        nav h2 {
+            color: white;
+            margin: 0;
+            font-family: 'Playfair Display', serif;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin-left: 20px;
+            font-weight: 400;
+        }
+
+        nav a:hover {
+            text-decoration: underline;
+        }
+
+        header {
+            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)),
+            url('https://images.unsplash.com/photo-1604908177522-402f20e5f8f6');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            text-align: center;
+            padding: 120px 20px;
+        }
+
+        header h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 48px;
+            margin-bottom: 10px;
+        }
+
+        header p {
+            font-size: 18px;
+            margin-bottom: 20px;
+        }
+
+        .btn {
+            background-color: #8b4513;
+            color: white;
+            padding: 12px 25px;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        .btn:hover {
+            background-color: #a0522d;
+        }
+
+        section {
+            padding: 60px 20px;
+            text-align: center;
+        }
+
+        h2 {
+            font-family: 'Playfair Display', serif;
+            margin-bottom: 30px;
+            color: #5a2d0c;
+        }
+
+        .card-container {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 25px;
+        }
+
+        .card {
+            background: white;
+            width: 280px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            overflow: hidden;
+            transition: 0.3s;
+        }
+
+        .card:hover {
+            transform: scale(1.05);
+        }
+
+        .card img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+        }
+
+        .card h3 {
+            margin: 15px 0 10px 0;
+            color: #8b4513;
+        }
+
+        .card p {
+            padding: 0 15px 15px;
+            font-size: 14px;
+        }
+
+        .mood-select {
+            margin-top: 20px;
+        }
+
+        select {
+            padding: 10px;
+            font-size: 16px;
+        }
+
+        footer {
+            background-color: #5a2d0c;
+            color: white;
+            padding: 20px;
+            margin-top: 40px;
+        }
+    </style>
+</head>
+
+<body>
+
+<!-- Navigation -->
+<nav>
+    <h2>Flavours & Tradition</h2>
+    <div>
+        <a href="login.html">Login</a>
+        <a href="register.html">Register</a>
+        <a href="admin.html">Admin</a>
+    </div>
+</nav>
+
+<!-- Hero Section -->
+<header>
+    <h1>Where Flavours Meet Fresh Tradition</h1>
+    <p>Experience the taste of culture with modern comfort</p>
+    <a href="menu.html">
+        <button class="btn">Explore Menu</button>
+    </a>
+</header>
+
+<!-- Explore Section -->
+<section>
+    <h2>Explore by Region</h2>
+    <div class="card-container">
+        <div class="card">
+            <img src="https://images.unsplash.com/photo-1589302168068-964664d93dc0">
+            <h3>South India</h3>
+            <p>Discover authentic dosas, pongal, and festive delights.</p>
+        </div>
+
+        <div class="card">
+            <img src="https://images.unsplash.com/photo-1601050690597-df0568f70950">
+            <h3>North India</h3>
+            <p>Rich curries, makki roti, and royal Mughlai flavours.</p>
+        </div>
+
+        <div class="card">
+            <img src="https://images.unsplash.com/photo-1600628422019-1ef6a07a10b4">
+            <h3>Traditional Sweets</h3>
+            <p>Festival special sweets made with heritage recipes.</p>
+        </div>
+    </div>
+</section>
+
+<!-- Mood Section -->
+<section style="background-color:#fff3e6;">
+    <h2>Mood to Meal</h2>
+    <p>Select your mood and get a traditional suggestion</p>
+
+    <div class="mood-select">
+        <select id="mood">
+            <option value="">Choose Mood</option>
+            <option value="comfort">Comfort</option>
+            <option value="celebration">Celebration</option>
+            <option value="spicy">Spicy Cravings</option>
+        </select>
+        <button class="btn" onclick="suggestFood()">Suggest</button>
+    </div>
+
+    <p id="suggestion" style="margin-top:20px; font-weight:bold;"></p>
+</section>
+
+<!-- Chef Section -->
+<section>
+    <h2>Heritage Chef Spotlight</h2>
+    <div class="card-container">
+        <div class="card">
+            <img src="https://images.unsplash.com/photo-1604908554168-5e1e8fbb73d4">
+            <h3>Chef Lakshmi</h3>
+            <p>Specialist in traditional festive South Indian cuisine with 25 years of experience.</p>
+        </div>
+    </div>
+</section>
+
+<footer>
+    <p>© 2026 Where Flavours Meet Fresh Tradition | Preserving Culture Digitally</p>
+</footer>
+
+<!-- External JS -->
+<script src="script.js"></script>
+
+</body>
+</html>

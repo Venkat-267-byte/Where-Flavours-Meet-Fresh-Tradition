@@ -1,0 +1,1330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Where Flavours Meet Fresh Tradition</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<style>
+    html {
+scroll-behavior: smooth;
+}
+
+    .login-overlay{
+display:none;
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,0.6);
+z-index:5000;
+justify-content:center;
+align-items:center;
+animation: fadeIn 0.3s ease;
+}
+
+.login-box{
+background:white;
+width:350px;
+padding:30px;
+border-radius:20px;
+text-align:center;
+position:relative;
+animation: slideUp 0.4s ease;
+box-shadow:0 25px 50px rgba(0,0,0,0.4);
+}
+
+@keyframes fadeIn{
+from{opacity:0;}
+to{opacity:1;}
+}
+
+@keyframes slideUp{
+from{transform:translateY(40px);opacity:0;}
+to{transform:translateY(0);opacity:1;}
+}
+
+#mainContent.blur{
+filter: blur(5px);
+pointer-events:none;
+user-select:none;
+}
+
+
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+font-family:'Poppins',sans-serif;
+background:#fdf6ec;
+overflow-x:hidden;
+}
+
+/* NAV */
+nav{
+background:#3b1f0e;
+padding:18px 60px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+color:white;
+position:fixed;
+width:100%;
+z-index:1000;
+box-shadow:0 4px 20px rgba(0,0,0,0.4);
+}
+
+.logo{display:flex;align-items:center;gap:12px;}
+.logo img{width:45px;}
+
+.nav-links a{
+position:relative;
+margin:0 20px;
+text-decoration:none;
+color:white;
+font-weight:500;
+transition:0.3s;
+}
+
+.nav-links a::after{
+content:"";
+position:absolute;
+left:0;
+bottom:-6px;
+width:0%;
+height:2px;
+background:gold;
+transition:0.4s;
+}
+
+.nav-links a:hover{
+color:gold;
+}
+
+.nav-links a:hover::after{
+width:100%;
+}
+
+.nav-links a:hover{color:gold;}
+
+nav button{
+background:none;border:none;color:white;
+font-size:18px;cursor:pointer;margin-left:20px;
+}
+
+#welcomeUser{margin-right:15px;font-weight:500;}
+
+/* HERO */
+.hero{
+height:100vh;
+position:relative;
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+text-align:center;
+color:white;
+overflow:hidden;
+}
+
+/* Background Image Layer */
+.hero::before{
+content:"";
+position:absolute;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:
+linear-gradient(to top, rgba(0,0,0,0.85), rgba(0,0,0,0.4)),
+linear-gradient(to right, rgba(0,0,0,0.6), transparent),
+url("https://static.vecteezy.com/system/resources/thumbnails/072/849/509/small/delicious-indian-food-served-in-traditional-golden-bowls-on-a-wooden-table-free-photo.jpg");
+background-size:cover;
+background-position:center;
+animation: cinematicZoom 18s ease-in-out infinite alternate;
+z-index:-2;
+}
+
+/* Vignette Effect */
+.hero::after{
+content:"";
+position:absolute;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:radial-gradient(circle at center, transparent 40%, rgba(0,0,0,0.8) 100%);
+z-index:-1;
+}
+
+/* Slow Cinematic Zoom */
+@keyframes cinematicZoom{
+from{
+transform:scale(1);
+}
+to{
+transform:scale(1.1);
+}
+}
+
+
+.hero h1{
+font-family:'Playfair Display', serif;
+font-size:60px;
+margin-bottom:25px;
+letter-spacing:2px;
+text-shadow:0 5px 20px rgba(0,0,0,0.8);
+animation: fadeUp 1.5s ease;
+}
+
+@keyframes fadeUp{
+from{
+opacity:0;
+transform:translateY(30px);
+}
+to{
+opacity:1;
+transform:translateY(0);
+}
+}
+
+
+.category-buttons button{
+padding:14px 35px;margin:12px;border:none;
+border-radius:40px;
+background:linear-gradient(45deg,#8b4513,#d4a017);
+color:white;cursor:pointer;
+}
+
+/* SECTION STYLE */
+.section{
+padding:120px 60px;
+min-height:100vh;
+background:#fff;
+}
+.section h2{
+font-family:'Playfair Display';
+font-size:36px;
+margin-bottom:20px;
+color:#3b1f0e;
+}
+
+/* MENU */
+.menu-section{display:none;padding:120px 40px;}
+.food-container{
+display:flex;flex-wrap:wrap;justify-content:center;gap:30px;
+}
+.food-card{
+width:280px;background:white;border-radius:20px;
+overflow:hidden;box-shadow:0 15px 35px rgba(0,0,0,0.2);
+}
+.food-card img{width:100%;height:200px;object-fit:cover;}
+.food-card-content{padding:20px;}
+.food-card-content button{
+margin-top:10px;padding:8px 18px;border:none;
+border-radius:25px;background:#3b1f0e;
+color:white;cursor:pointer;
+}
+/* ===== PREMIUM QUANTITY CONTROLLER ===== */
+
+.qty-control{
+display:flex;
+align-items:center;
+justify-content:center;
+gap:10px;
+margin-top:12px;
+background:#f8f1e7;
+padding:8px 12px;
+border-radius:50px;
+width:140px;
+margin-left:auto;
+margin-right:auto;
+box-shadow:0 5px 15px rgba(0,0,0,0.08);
+transition:0.3s;
+}
+
+.qty-control:hover{
+box-shadow:0 8px 20px rgba(212,160,23,0.3);
+transform:scale(1.05);
+}
+
+.qty-btn{
+width:32px;
+height:32px;
+border:none;
+border-radius:50%;
+background:linear-gradient(45deg,#8b4513,#d4a017);
+color:white;
+font-size:18px;
+cursor:pointer;
+display:flex;
+align-items:center;
+justify-content:center;
+transition:0.3s;
+}
+
+.qty-btn:hover{
+transform:scale(1.15);
+box-shadow:0 0 15px gold;
+}
+
+.qty-input{
+width:45px;
+text-align:center;
+border:none;
+background:transparent;
+font-weight:600;
+font-size:16px;
+outline:none;
+}
+
+
+/* CART */
+.cart-panel{
+position:fixed;right:-420px;top:0;width:380px;height:100%;
+background:white;box-shadow:-8px 0 30px rgba(0,0,0,0.3);
+padding:30px;transition:0.5s;overflow-y:auto;z-index:2000;
+}
+.cart-panel.open{right:0;}
+
+.cart-header{
+display:flex;justify-content:space-between;
+margin-bottom:20px;
+}
+
+.close-cart{cursor:pointer;font-size:22px;}
+
+.pay-btn{
+margin-top:15px;
+padding:12px;
+width:100%;
+background:#3b1f0e;
+color:white;
+border:none;
+border-radius:25px;
+cursor:pointer;
+}
+
+/* ADD THIS BELOW */
+.pay-btn:hover,
+.category-buttons button:hover{
+box-shadow:0 0 20px gold;
+transform:scale(1.05);
+transition:0.3s;
+}
+/* ===== PREMIUM SCROLL FADE ANIMATION ===== */
+
+.section{
+opacity:0;
+transform:translateY(40px);
+transition:0.8s ease;
+}
+
+.section.show{
+opacity:1;
+transform:translateY(0);
+}
+/* ===== PREMIUM ABOUT SECTION ===== */
+
+.about-section{
+background:linear-gradient(to bottom, #fff, #fdf6ec);
+}
+
+.about-title{
+text-align:center;
+font-size:42px;
+margin-bottom:50px;
+font-family:'Playfair Display', serif;
+color:#3b1f0e;
+position:relative;
+}
+
+.about-title::after{
+content:"";
+width:120px;
+height:3px;
+background:gold;
+display:block;
+margin:15px auto 0;
+}
+
+.about-container{
+display:flex;
+justify-content:space-between;
+gap:50px;
+flex-wrap:wrap;
+}
+
+.about-text{
+flex:1;
+min-width:300px;
+font-size:17px;
+line-height:1.8;
+color:#444;
+}
+
+.about-features{
+flex:1;
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+gap:20px;
+}
+
+.feature-card{
+background:white;
+padding:25px;
+border-radius:15px;
+box-shadow:0 10px 25px rgba(0,0,0,0.1);
+transition:0.4s;
+}
+
+.feature-card:hover{
+transform:translateY(-8px);
+box-shadow:0 20px 40px rgba(0,0,0,0.2);
+}
+
+.feature-card h3{
+margin-bottom:10px;
+color:#8b4513;
+font-size:18px;
+}
+/* ===== PREMIUM CONTACT SECTION ===== */
+
+.contact-section{
+background:linear-gradient(to bottom,#fdf6ec,#f7efe2);
+color:#3b1f0e;
+text-align:center;
+position:relative;
+}
+
+
+.contact-title{
+font-size:40px;
+margin-bottom:15px;
+font-family:'Playfair Display', serif;
+position:relative;
+}
+.contact-title{
+color:#3b1f0e;
+}
+
+.contact-subtitle{
+color:#6b4f3b;
+}
+
+
+.contact-title::after{
+content:"";
+width:100px;
+height:3px;
+background:gold;
+display:block;
+margin:15px auto 0;
+}
+
+.contact-subtitle{
+margin-bottom:50px;
+font-size:16px;
+opacity:0.85;
+}
+
+.contact-container{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+gap:30px;
+}
+
+.contact-card{
+background:white;
+padding:35px;
+border-radius:25px;
+box-shadow:0 20px 40px rgba(0,0,0,0.08);
+transition:0.4s;
+position:relative;
+overflow:hidden;
+border:1px solid rgba(0,0,0,0.05);
+}
+
+
+
+.contact-card:hover{
+transform:translateY(-10px);
+box-shadow:0 25px 50px rgba(139,69,19,0.15);
+border:1px solid gold;
+}
+
+
+.contact-card h3{
+margin-bottom:15px;
+color:gold;
+}
+.contact-card p{
+word-break:break-word;
+font-size:15px;
+line-height:1.6;
+}
+
+
+.social-icons{
+display:flex;
+flex-direction:column;
+gap:10px;
+}
+
+.social-icons{
+display:flex;
+justify-content:center;
+gap:20px;
+margin-top:15px;
+}
+
+/* Base Style */
+.social-icons a{
+display:flex;
+align-items:center;
+gap:8px;
+padding:12px 22px;
+border-radius:30px;
+text-decoration:none;
+font-weight:600;
+transition:0.3s;
+font-size:15px;
+}
+
+/* Instagram */
+.social-icons a.insta{
+background:linear-gradient(45deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888);
+color:white;
+}
+
+.social-icons a.insta:hover{
+transform:scale(1.08);
+box-shadow:0 10px 25px rgba(220,39,67,0.4);
+}
+
+/* Facebook */
+.social-icons a.facebook{
+background:#1877f2;
+color:white;
+}
+
+.social-icons a.facebook:hover{
+transform:scale(1.08);
+box-shadow:0 10px 25px rgba(24,119,242,0.4);
+}
+
+
+.social-icons a:hover{
+background:gold;
+color:#3b1f0e;
+box-shadow:0 10px 25px rgba(255,215,0,0.3);
+}
+
+
+.social-icons a:hover{
+color:gold;
+letter-spacing:1px;
+}
+/* ===== GOLDEN BORDER ANIMATION ===== */
+
+.contact-card::before{
+content:"";
+position:absolute;
+top:0;
+left:0;
+width:100%;
+height:100%;
+border-radius:20px;
+padding:2px;
+background:linear-gradient(45deg,gold,transparent,gold);
+-webkit-mask:
+linear-gradient(#fff 0 0) content-box,
+linear-gradient(#fff 0 0);
+-webkit-mask-composite:xor;
+mask-composite:exclude;
+animation:borderGlow 4s linear infinite;
+}
+
+@keyframes borderGlow{
+0%{background-position:0% 50%;}
+100%{background-position:300% 50%;}
+}
+
+/* Premium Hover */
+
+.contact-card:hover{
+transform:translateY(-12px) scale(1.03);
+box-shadow:0 25px 50px rgba(255,215,0,0.4);
+}
+
+/* Premium Social Icons */
+
+.social-icons{
+display:flex;
+justify-content:center;
+gap:20px;
+margin-top:10px;
+}
+
+.social-icons a{
+background:rgba(255,255,255,0.1);
+padding:10px 18px;
+border-radius:30px;
+text-decoration:none;
+color:white;
+transition:0.3s;
+}
+
+.social-icons a:hover{
+background:gold;
+color:#3b1f0e;
+transform:scale(1.1);
+box-shadow:0 10px 25px rgba(255,215,0,0.5);
+}
+/* ===== ORDER HISTORY PREMIUM ===== */
+
+.order-card{
+background:white;
+padding:25px;
+margin-bottom:25px;
+border-radius:20px;
+box-shadow:0 15px 35px rgba(0,0,0,0.1);
+transition:0.4s;
+border-left:5px solid gold;
+}
+
+.order-card:hover{
+transform:translateY(-5px);
+box-shadow:0 20px 40px rgba(0,0,0,0.2);
+}
+
+.order-card h4{
+color:#8b4513;
+margin-bottom:10px;
+}
+
+.order-items{
+font-size:14px;
+color:#555;
+margin-top:10px;
+}
+
+.order-total{
+margin-top:10px;
+font-weight:bold;
+color:#3b1f0e;
+}
+/* ===== PREMIUM LOGO INTRO ===== */
+
+#preloader{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:#3b1f0e;
+display:flex;
+justify-content:center;
+align-items:center;
+z-index:9999;
+overflow:hidden;
+}
+
+#introLogo{
+width:140px;
+animation: logoEntry 2s ease forwards,
+           logoShrink 1s ease 2.2s forwards;
+}
+
+@keyframes logoEntry{
+0%{
+opacity:0;
+transform:scale(0.5);
+}
+100%{
+opacity:1;
+transform:scale(1.2);
+}
+}
+
+@keyframes logoShrink{
+to{
+transform:scale(0.35) translate(-300px,-200px);
+}
+}
+
+
+</style>
+</head>
+
+<body>
+    <!-- PREMIUM LOGO INTRO -->
+<div id="preloader">
+    <img src="images/logoo.png" id="introLogo">
+</div>
+
+<div id="mainContent" style="display:none;">
+
+
+
+<nav>
+<div class="logo">
+<img src="images/logo.png">
+<h2>Flavours & Tradition</h2>
+</div>
+
+<div class="nav-links">
+<a href="javascript:void(0)" onclick="goHome()">Home</a>
+<a href="javascript:void(0)" onclick="scrollToOrders()">Orders</a>
+<a href="#about">About</a>
+<a href="#contact">Contact</a>
+</div>
+
+
+<div id="navRight">
+<button onclick="openAuth()">👤</button>
+<button onclick="toggleCart()">🛒</button>
+</div>
+</nav>
+
+<!-- HOME -->
+<div class="hero" id="home">
+<h1>Where Flavours Meet Fresh Tradition</h1>
+<div class="category-buttons">
+<button onclick="showMenu('south')">South Indian</button>
+<button onclick="showMenu('north')">North Indian</button>
+</div>
+</div>
+
+
+
+
+
+<!-- MENU -->
+<div class="menu-section" id="menuSection">
+<h2 id="menuTitle" style="text-align:center;margin-bottom:50px;font-family:'Playfair Display';"></h2>
+<div class="food-container" id="foodContainer"></div>
+<button onclick="goHome()" style="display:block;margin:40px auto;padding:12px 35px;border:none;border-radius:30px;background:#3b1f0e;color:white;">← Return Home</button>
+</div>
+<!-- ORDER HISTORY -->
+<div class="section" id="orders">
+
+<h2 style="text-align:center;font-family:'Playfair Display';font-size:38px;color:#3b1f0e;">
+Your Order History
+</h2>
+
+<div id="orderHistoryContainer" style="margin-top:40px;"></div>
+
+</div>
+
+<!-- ABOUT -->
+<div class="section about-section" id="about">
+
+<h2 class="about-title">Our Culinary Legacy</h2>
+
+<div class="about-container">
+
+<div class="about-text">
+<p>
+At <strong>Where Flavours Meet Fresh Tradition</strong>, we bring centuries of Indian culinary heritage into the modern digital world.
+Every dish is crafted with authenticity, regional richness, and cultural pride.
+</p>
+
+<p>
+From the vibrant spices of the South to the royal gravies of the North, 
+our platform celebrates India’s diverse food culture while delivering a seamless premium ordering experience.
+</p>
+
+<p>
+We are not just serving food — we are preserving tradition, storytelling through taste,
+and redefining how heritage cuisine meets technology.
+</p>
+</div>
+
+<div class="about-features">
+
+<div class="feature-card">
+<h3>🌿 Authentic Ingredients</h3>
+<p>Traditional spices & time-honored recipes.</p>
+</div>
+
+<div class="feature-card">
+<h3>👨‍🍳 Heritage Inspired</h3>
+<p>Dishes rooted in regional culture & history.</p>
+</div>
+
+<div class="feature-card">
+<h3>⚡ Modern Experience</h3>
+<p>Fast, smooth & premium digital ordering.</p>
+</div>
+
+<div class="feature-card">
+<h3>❤️ Crafted with Passion</h3>
+<p>Every plate tells a cultural story.</p>
+</div>
+
+</div>
+
+</div>
+</div>
+
+
+
+<!-- CONTACT -->
+<div class="section contact-section" id="contact">
+
+<h2 class="contact-title">Get In Touch</h2>
+
+<p class="contact-subtitle">
+We would love to serve you. Reach out for orders, collaborations, or feedback.
+</p>
+
+<div class="contact-container">
+
+<div class="contact-card">
+<h3>📞 Call Us</h3>
+<p>+91 9515486662</p>
+</div>
+
+<div class="contact-card">
+<h3>📧 Email</h3>
+<p>support@whereflavoursmeetfreshtradition.com</p>
+</div>
+
+<div class="contact-card">
+<h3>📍 Location</h3>
+<p>Hyderabad, Telangana, India</p>
+</div>
+
+<div class="contact-card social-card">
+<h3>🌐 Follow Us</h3>
+<div class="social-icons">
+<a href="#" class="insta" target="_blank">
+<i class="fab fa-instagram"></i> Instagram
+</a>
+
+<a href="#" class="facebook" target="_blank">
+<i class="fab fa-facebook-f"></i> Facebook
+</a>
+</div>
+
+
+</div>
+
+</div>
+
+</div>
+
+
+<!-- CART -->
+<div class="cart-panel" id="cartPanel">
+<div class="cart-header">
+<h3>Your Cart</h3>
+<span class="close-cart" onclick="toggleCart()">✖</span>
+</div>
+<div id="cartItems"></div>
+<h4>Total: ₹<span id="total">0</span></h4>
+<button class="pay-btn" onclick="startPayment()">Pay Now</button>
+</div>
+</div>
+<!-- LOGIN MODAL -->
+<div id="loginModal" class="login-overlay">
+
+  
+  <div class="login-box">
+
+    
+    <span onclick="closeLogin()" style="position:absolute; top:10px; right:15px; cursor:pointer; font-size:18px;">✖</span>
+    
+    <h2 style="font-family:'Playfair Display'; margin-bottom:20px; color:#3b1f0e;">Login</h2>
+    
+    <input id="loginEmail" type="email" placeholder="Enter Email" 
+    style="width:100%; padding:10px; margin-bottom:15px; border-radius:8px; border:1px solid #ccc;">
+    
+    <input id="loginPassword" type="password" placeholder="Enter Password" 
+    style="width:100%; padding:10px; margin-bottom:15px; border-radius:8px; border:1px solid #ccc;">
+    
+    <button onclick="loginUser()" 
+    style="width:100%; padding:10px; background:#3b1f0e; color:white; border:none; border-radius:25px; cursor:pointer;">
+    Login
+    </button>
+    <p style="margin-top:15px;font-size:14px;">
+New user? 
+<span onclick="showSignup()" style="color:#8b4513;cursor:pointer;font-weight:bold;">
+Sign Up
+</span>
+</p>
+
+    
+  </div>
+</div>
+
+
+<script>
+let cart=[];
+let totalAmount=0;
+// DOM References (FIX FOR MENU NOT WORKING)
+const heroSection = document.getElementById("home");
+const menuSection = document.getElementById("menuSection");
+const menuTitle = document.getElementById("menuTitle");
+const foodContainer = document.getElementById("foodContainer");
+const cartPanel = document.getElementById("cartPanel");
+const cartItems = document.getElementById("cartItems");
+const total = document.getElementById("total");
+
+
+let southIndian = {
+Breakfast: [
+{name:"Idli Sambar",price:80,img:"images/idli.png"},
+{name:"Masala Dosa",price:120,img:"images/dosa.png"},
+{name:"Upma",price:70,img:"images/upma.png"}
+],
+
+Lunch: [
+{name:"South Indian Thali",price:180,img:"images/thali.png"},
+{name:"Sambar Rice",price:110,img:"images/sambarrice.png"},
+{name:"Pulihora",price:90,img:"images/pulihora.png"}
+],
+
+Dinner: [
+{name:"Pongal",price:100,img:"images/pongal.png"},
+{name:"Rava Dosa",price:130,img:"images/ravvadosa.png"},
+{name:"Curd Rice",price:85,img:"images/curdrice.png"}
+],
+
+Snacks: [
+{name:"Medu Vada",price:60,img:"images/vada.png"},
+{name:"Mirchi Bajji",price:90,img:"images/bajji.png"},
+{name:"Murukku",price:70,img:"images/murukku.png"}
+]
+};
+
+
+let northIndian = {
+Breakfast: [
+{name:"Aloo Paratha",price:100,img:"images/aloo.png"},
+{name:"Chole Bhature",price:150,img:"images/chole.png"},
+{name:"Dhokla",price:110,img:"images/dhokla.png"}
+],
+Lunch: [
+{name:"Rajma Chawal",price:200,img:"images/rajma.png"},
+{name:"Paneer Butter Masala",price:220,img:"images/pannerbutter.png"},
+{name:"Matar Masala",price:150,img:"images/matar.png"}
+],
+Dinner: [
+{name:"Dal Makhani",price:200,img:"images/daalmakhani.png"},
+{name:"Roti & Sabzi",price:140,img:"images/roti.png"},
+{name:"Butter Naan",price:90,img:"images/naan.png"}
+],
+Snacks: [
+{name:"Samosa",price:40,img:"images/samosa.png"},
+{name:"Kachori",price:50,img:"images/kachori.png"},
+{name:"Paneer Tikka",price:120,img:"images/paneertikka.png"}
+
+]
+};
+
+
+function showMenu(type){
+
+heroSection.style.display = "none";
+menuSection.style.display = "block";
+
+let data = type === "south" ? southIndian : northIndian;
+menuTitle.innerText = type === "south" ? "South Indian Menu" : "North Indian Menu";
+
+foodContainer.innerHTML = "";
+
+for (let category in data){
+
+foodContainer.innerHTML += `
+<h3 style="width:100%;margin:30px 0 10px;font-family:'Playfair Display';color:#8b4513;">
+${category}
+</h3>
+`;
+
+data[category].forEach(item=>{
+
+foodContainer.innerHTML += `
+<div class="food-card">
+<img src="${item.img}">
+<div class="food-card-content">
+<h3>${item.name}</h3>
+<p>₹${item.price}</p>
+
+<div class="qty-control">
+<button class="qty-btn" onclick="changeQty('${item.name}', -1)">−</button>
+<input type="number" class="qty-input" value="1" min="1" id="${item.name.replace(/\s/g,'')}">
+<button class="qty-btn" onclick="changeQty('${item.name}', 1)">+</button>
+</div>
+
+
+<button style="margin-top:10px;" onclick="addToCart('${item.name}',${item.price},'${item.name.replace(/\s/g,'')}')">
+Add to Cart
+</button>
+
+</div>
+</div>
+`;
+
+});
+}
+
+// 🔥 THIS FIXES THE SCROLL ISSUE
+menuSection.scrollIntoView({ behavior: "smooth" });
+
+}
+
+
+
+
+function goHome(){
+
+menuSection.style.display = "none";
+heroSection.style.display = "flex";
+
+window.scrollTo({
+top: 0,
+behavior: "smooth"
+});
+
+}
+
+
+
+
+function addToCart(name,price,id){
+let qty=parseInt(document.getElementById(id).value);
+cart.push({name,price,qty});
+updateCart();toggleCart();
+}
+function changeQty(name, change){
+let input = document.getElementById(name.replace(/\s/g,''));
+let current = parseInt(input.value);
+current += change;
+
+if(current < 1) current = 1;
+
+input.value = current;
+}
+
+
+function toggleCart(){cartPanel.classList.toggle("open");updateCart();}
+
+function updateCart(){
+cartItems.innerHTML="";
+totalAmount=0;
+
+cart.forEach((item,index)=>{
+let itemTotal=item.price*item.qty;
+totalAmount+=itemTotal;
+
+cartItems.innerHTML+=`
+<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+<span>${item.name} x${item.qty} - ₹${itemTotal}</span>
+<button onclick="removeItem(${index})" style="background:red;color:white;border:none;border-radius:5px;padding:3px 8px;cursor:pointer;">X</button>
+</div>
+`;
+});
+
+total.innerText=totalAmount;
+}
+function removeItem(index){
+cart.splice(index,1);
+updateCart();
+}
+function scrollToOrders(){
+document.getElementById("orders").scrollIntoView({behavior:"smooth"});
+}
+
+
+function startPayment(){
+
+let user = localStorage.getItem("loggedInUser");
+
+if(!user){
+alert("Please login before making payment!");
+openAuth();
+return;
+}
+
+if(totalAmount <= 0){
+alert("Cart is empty!");
+return;
+}
+
+var options = {
+key:"rzp_test_1DP5mmOlF5G5ag",
+amount: totalAmount * 100,
+currency:"INR",
+name:"Where Flavours Meet Fresh Tradition",
+description:"Food ordering Payment",
+
+handler:function(response){
+
+alert("Payment Successful!");
+
+// Create order object
+let order = {
+date: new Date().toLocaleString(),
+items: [...cart],
+total: totalAmount
+};
+
+let orders = JSON.parse(localStorage.getItem("orderHistory")) || [];
+orders.push(order);
+localStorage.setItem("orderHistory", JSON.stringify(orders));
+
+// Clear cart
+cart = [];
+updateCart();
+toggleCart();
+displayOrders();
+},
+
+theme:{color:"#8b4513"}
+};
+
+var rzp = new Razorpay(options);
+rzp.open();
+}
+function reorder(index){
+
+let orders = JSON.parse(localStorage.getItem("orderHistory")) || [];
+let selectedOrder = orders[index];
+
+if(!selectedOrder) return;
+
+cart = [];
+
+selectedOrder.items.forEach(item=>{
+cart.push(item);
+});
+
+updateCart();
+toggleCart();
+
+alert("Items added to cart again!");
+}
+
+function generateInvoice(index){
+
+let orders = JSON.parse(localStorage.getItem("orderHistory")) || [];
+let order = orders[index];
+
+if(!order) return;
+
+let invoiceContent = `
+----- Where Flavours Meet Fresh Tradition -----
+
+Date: ${order.date}
+
+Items:
+`;
+
+order.items.forEach(item=>{
+invoiceContent += `
+${item.name} x${item.qty} - ₹${item.price * item.qty}
+`;
+});
+
+invoiceContent += `
+
+----------------------------------------
+Total Amount: ₹${order.total}
+----------------------------------------
+
+Thank you for ordering with us!
+`;
+
+let blob = new Blob([invoiceContent], { type: "text/plain" });
+let link = document.createElement("a");
+
+link.href = URL.createObjectURL(blob);
+link.download = "Invoice.txt";
+link.click();
+}
+
+
+
+function openAuth(){
+document.getElementById("loginModal").style.display = "flex";
+document.getElementById("mainContent").classList.add("blur");
+}
+
+function closeLogin(){
+document.getElementById("loginModal").style.display = "none";
+document.getElementById("mainContent").classList.remove("blur");
+}
+
+
+function loginUser(){
+let email = document.getElementById("loginEmail").value;
+let password = document.getElementById("loginPassword").value;
+
+let savedEmail = localStorage.getItem("registeredUser");
+let savedPass = localStorage.getItem("registeredPass");
+
+if(email === "" || password === ""){
+alert("Please fill all fields!");
+return;
+}
+
+if(email !== savedEmail || password !== savedPass){
+alert("Invalid credentials!");
+return;
+}
+
+let username = email.split("@")[0];
+localStorage.setItem("loggedInUser", username);
+
+updateNavbar();
+closeLogin();
+}
+
+function showSignup(){
+document.getElementById("loginEmail").placeholder = "Enter Email for Signup";
+document.getElementById("loginPassword").placeholder = "Create Password";
+
+document.querySelector("#loginModal h2").innerText = "Sign Up";
+
+document.querySelector("#loginModal button").innerText = "Register";
+document.querySelector("#loginModal button").setAttribute("onclick","registerUser()");
+}
+
+function registerUser(){
+let email = document.getElementById("loginEmail").value;
+let password = document.getElementById("loginPassword").value;
+
+if(email === "" || password === ""){
+alert("Please fill all fields!");
+return;
+}
+
+localStorage.setItem("registeredUser", email);
+localStorage.setItem("registeredPass", password);
+
+alert("Registration Successful! Please Login.");
+
+// Reset back to login mode
+document.querySelector("#loginModal h2").innerText = "Login";
+document.querySelector("#loginModal button").innerText = "Login";
+document.querySelector("#loginModal button").setAttribute("onclick","loginUser()");
+}
+
+
+
+function logoutUser(){
+localStorage.removeItem("loggedInUser");
+updateNavbar();
+}
+
+function updateNavbar(){
+let user = localStorage.getItem("loggedInUser");
+let navRight = document.getElementById("navRight");
+
+if(user){
+navRight.innerHTML = `
+<span id="welcomeUser">Welcome, ${user}</span>
+<button onclick="logoutUser()" style="background:none;border:none;color:gold;cursor:pointer;margin-left:10px;">Logout</button>
+<button onclick="toggleCart()">🛒</button>
+`;
+}else{
+navRight.innerHTML = `
+<button onclick="openAuth()">👤</button>
+<button onclick="toggleCart()">🛒</button>
+`;
+}
+}
+
+
+
+
+
+updateNavbar();
+
+function displayOrders(){
+
+let container = document.getElementById("orderHistoryContainer");
+container.innerHTML = "";
+
+let orders = JSON.parse(localStorage.getItem("orderHistory")) || [];
+
+if(orders.length === 0){
+container.innerHTML = "<p style='text-align:center;color:#777;'>No previous orders found.</p>";
+return;
+}
+
+orders.slice().reverse().forEach(order => {
+
+let itemsHTML = "";
+
+order.items.forEach(item=>{
+itemsHTML += `<div>${item.name} x${item.qty}</div>`;
+});
+
+container.innerHTML += `
+<div class="order-card">
+<h4>Order Placed On: ${order.date}</h4>
+<div class="order-items">${itemsHTML}</div>
+<div class="order-total">Total: ₹${order.total}</div>
+
+<div style="margin-top:15px;display:flex;gap:15px;">
+<button onclick="reorder(${orders.indexOf(order)})" 
+style="padding:8px 15px;border:none;border-radius:20px;background:#8b4513;color:white;cursor:pointer;">
+Reorder
+</button>
+
+<button onclick="generateInvoice(${orders.indexOf(order)})"
+style="padding:8px 15px;border:none;border-radius:20px;background:gold;color:#3b1f0e;font-weight:bold;cursor:pointer;">
+Generate Invoice
+</button>
+</div>
+
+</div>
+`;
+
+
+});
+}
+displayOrders();
+
+
+// ===== PREMIUM SCROLL ANIMATION =====
+
+const sections = document.querySelectorAll(".section");
+
+window.addEventListener("scroll", () => {
+sections.forEach(section => {
+const rect = section.getBoundingClientRect();
+if(rect.top < window.innerHeight - 100){
+section.classList.add("show");
+}
+});
+});
+// ===== PREMIUM INTRO CONTROL =====
+
+window.addEventListener("load", function(){
+
+setTimeout(function(){
+
+document.getElementById("preloader").style.opacity = "0";
+document.getElementById("preloader").style.transition = "0.6s";
+
+setTimeout(function(){
+document.getElementById("preloader").style.display = "none";
+document.getElementById("mainContent").style.display = "block";
+},600);
+
+},3000); // 3 seconds intro
+
+});
+
+</script>
+
+</body>
+</html>

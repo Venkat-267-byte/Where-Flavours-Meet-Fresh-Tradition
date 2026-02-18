@@ -1219,9 +1219,28 @@ document.querySelector("#loginModal button").setAttribute("onclick","loginUser()
 
 
 function logoutUser(){
+
+// Remove logged in user
 localStorage.removeItem("loggedInUser");
+
+// 🔥 DELETE ORDER HISTORY ON LOGOUT
+localStorage.removeItem("orderHistory");
+
+// Clear order history section visually
+document.getElementById("orderHistoryContainer").innerHTML = 
+"<p style='text-align:center;color:#777;'>Please login to view your orders.</p>";
+
+// Clear cart also (optional but recommended)
+cart = [];
+updateCart();
+
+// Update navbar
 updateNavbar();
+
+// Go to home
+goHome();
 }
+
 
 function updateNavbar(){
 let user = localStorage.getItem("loggedInUser");
@@ -1328,5 +1347,6 @@ document.getElementById("mainContent").style.display = "block";
 
 </body>
 </html>
+
 
 

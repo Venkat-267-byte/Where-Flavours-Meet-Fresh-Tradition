@@ -1075,9 +1075,15 @@ items: [...cart],
 total: totalAmount
 };
 
-let orders = JSON.parse(localStorage.getItem("orderHistory")) || [];
+let user = localStorage.getItem("loggedInUser");
+
+let orders = JSON.parse(localStorage.getItem("orderHistory_" + user)) || [];
+
 orders.push(order);
-localStorage.setItem("orderHistory", JSON.stringify(orders));
+
+localStorage.setItem("orderHistory_" + user, JSON.stringify(orders));
+
+
 
 // Clear cart
 cart = [];
@@ -1094,7 +1100,9 @@ rzp.open();
 }
 function reorder(index){
 
-let orders = JSON.parse(localStorage.getItem("orderHistory")) || [];
+let user = localStorage.getItem("loggedInUser");
+let orders = JSON.parse(localStorage.getItem("orderHistory_" + user)) || [];
+
 let selectedOrder = orders[index];
 
 if(!selectedOrder) return;
@@ -1113,7 +1121,9 @@ alert("Items added to cart again!");
 
 function generateInvoice(index){
 
-let orders = JSON.parse(localStorage.getItem("orderHistory")) || [];
+let user = localStorage.getItem("loggedInUser");
+let orders = JSON.parse(localStorage.getItem("orderHistory_" + user)) || [];
+
 let order = orders[index];
 
 if(!order) return;
@@ -1163,28 +1173,40 @@ document.getElementById("mainContent").classList.remove("blur");
 
 
 function loginUser(){
+
 let email = document.getElementById("loginEmail").value;
 let password = document.getElementById("loginPassword").value;
-
-let savedEmail = localStorage.getItem("registeredUser");
-let savedPass = localStorage.getItem("registeredPass");
 
 if(email === "" || password === ""){
 alert("Please fill all fields!");
 return;
 }
 
-if(email !== savedEmail || password !== savedPass){
+// Get users
+let users = JSON.parse(localStorage.getItem("users")) || [];
+
+// Find matching user
+let validUser = users.find(user => 
+user.email === email && user.password === password
+);
+
+if(!validUser){
 alert("Invalid credentials!");
 return;
 }
 
 let username = email.split("@")[0];
+
+// Save logged in user
 localStorage.setItem("loggedInUser", username);
 
 updateNavbar();
 closeLogin();
+
+// 🔥 Load that user's order history
+displayOrders();
 }
+
 
 function showSignup(){
 document.getElementById("loginEmail").placeholder = "Enter Email for Signup";
@@ -1197,6 +1219,7 @@ document.querySelector("#loginModal button").setAttribute("onclick","registerUse
 }
 
 function registerUser(){
+
 let email = document.getElementById("loginEmail").value;
 let password = document.getElementById("loginPassword").value;
 
@@ -1205,12 +1228,26 @@ alert("Please fill all fields!");
 return;
 }
 
-localStorage.setItem("registeredUser", email);
-localStorage.setItem("registeredPass", password);
+// Get existing users
+let users = JSON.parse(localStorage.getItem("users")) || [];
+
+// Check if user already exists
+let existingUser = users.find(user => user.email === email);
+
+if(existingUser){
+alert("User already exists! Please login.");
+return;
+}
+
+// Add new user
+users.push({email, password});
+
+// Save back
+localStorage.setItem("users", JSON.stringify(users));
 
 alert("Registration Successful! Please Login.");
 
-// Reset back to login mode
+// Reset to login mode
 document.querySelector("#loginModal h2").innerText = "Login";
 document.querySelector("#loginModal button").innerText = "Login";
 document.querySelector("#loginModal button").setAttribute("onclick","loginUser()");
@@ -1218,28 +1255,20 @@ document.querySelector("#loginModal button").setAttribute("onclick","loginUser()
 
 
 
+
 function logoutUser(){
 
-// Remove logged in user
 localStorage.removeItem("loggedInUser");
 
-// 🔥 DELETE ORDER HISTORY ON LOGOUT
-localStorage.removeItem("orderHistory");
-
-// Clear order history section visually
-document.getElementById("orderHistoryContainer").innerHTML = 
-"<p style='text-align:center;color:#777;'>Please login to view your orders.</p>";
-
-// Clear cart also (optional but recommended)
 cart = [];
 updateCart();
-
-// Update navbar
 updateNavbar();
 
-// Go to home
+document.getElementById("orderHistoryContainer").innerHTML = "";
+
 goHome();
 }
+
 
 
 function updateNavbar(){
@@ -1271,7 +1300,15 @@ function displayOrders(){
 let container = document.getElementById("orderHistoryContainer");
 container.innerHTML = "";
 
-let orders = JSON.parse(localStorage.getItem("orderHistory")) || [];
+let user = localStorage.getItem("loggedInUser");
+
+if(!user){
+container.innerHTML = "<p style='text-align:center;color:#777;'>Please login to view your orders.</p>";
+return;
+}
+
+let orders = JSON.parse(localStorage.getItem("orderHistory_" + user)) || [];
+
 
 if(orders.length === 0){
 container.innerHTML = "<p style='text-align:center;color:#777;'>No previous orders found.</p>";
@@ -1347,6 +1384,5 @@ document.getElementById("mainContent").style.display = "block";
 
 </body>
 </html>
-
 
 
